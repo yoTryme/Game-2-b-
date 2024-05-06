@@ -15,13 +15,10 @@ class PlayerShip extends Phaser.Scene {
     }
     
     create() {
-        // 添加玩家飞机
         this.my.sprite.body = this.add.sprite(this.bodyX, this.bodyY, 'playership');
 
-        // 添加子弹并隐藏
         this.bullet = this.add.sprite(this.bodyX, this.bodyY - 20, 'playerbullet').setVisible(false);
 
-        // 添加输入控制
         this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.DKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -34,7 +31,6 @@ class PlayerShip extends Phaser.Scene {
 
             let movementDelta = this.speed * (delta / 1000);
 
-            // 左右移动
             if (this.AKey.isDown) {
                 this.my.sprite.body.x -= movementDelta;
             }
@@ -44,12 +40,10 @@ class PlayerShip extends Phaser.Scene {
             }
         }
 
-        // 发射子弹
         if (this.spaceBar.isDown && !this.bullet.visible) {
             this.fireBullet();
         }
 
-        // 更新子弹状态
         if (this.bullet.visible) {
             this.bullet.y -= this.speed * 4 * (delta / 1000);
             if (this.bullet.y < 0) {

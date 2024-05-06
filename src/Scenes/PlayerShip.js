@@ -1,10 +1,10 @@
 class PlayerShip extends Phaser.Scene {
     constructor() {
         super('PlayerShipScene');
-        this.bodyX = 400;  
+        this.bodyX = 325;  
         this.bodyY = 550;  
         this.my = { sprite: {} };
-        this.speed = 160;  
+        this.speed = 200; 
         this.frameTime = 0;  
     }
 

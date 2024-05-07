@@ -1,1 +1,1 @@
-Class assignment for CMPM120 where we explore 1D movement
+Class assignment for CMPM120 where we Gallery shooter 

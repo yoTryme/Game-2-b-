@@ -1,12 +1,19 @@
 let config = {
-    parent: 'phaser-game',
-    type: Phaser.CANVAS,
-    render: {
-        pixelArt: true
-    },
-    width: 650,
+    type: Phaser.AUTO,
+    width: 800,
     height: 600,
-    scene: [GameScene]
-}
-
-const game = new Phaser.Game(config);
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: false
+        }
+    },
+    scene: [
+        window.Title,
+        window.Play,
+        window.Credits,
+        window.GG
+    ]
+};
+let game = new Phaser.Game(config);

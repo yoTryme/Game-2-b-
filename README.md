@@ -1,1 +1,1 @@
-Class assignment for CMPM120 where we Gallery shooter 
+Class assignment for CMPM120 Gallery shooter implementation

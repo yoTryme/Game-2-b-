@@ -4,7 +4,6 @@ class Title extends Phaser.Scene {
     }
 
     create() {
-        // 标题文本
         this.titleText = this.add.text(this.cameras.main.centerX, 100, 'Star Genesis', {
             font: '60px Arial',
             fill: '#ffffff',
@@ -19,7 +18,6 @@ class Title extends Phaser.Scene {
             }
         }).setOrigin(0.5);
 
-        // 开始游戏按钮
         this.startGameButton = this.add.text(this.cameras.main.centerX, 250, 'Click Here to Start Game', {
             font: '30px Arial',
             fill: '#ffffff',
@@ -27,7 +25,6 @@ class Title extends Phaser.Scene {
             padding: { x: 10, y: 5 }
         }).setOrigin(0.5).setInteractive();
 
-        // 查看Credits按钮
         this.creditsButton = this.add.text(this.cameras.main.centerX, 320, 'You can click here to check Credits', {
             font: '25px Arial',
             fill: '#ffffff',
@@ -35,13 +32,11 @@ class Title extends Phaser.Scene {
             padding: { x: 10, y: 5 }
         }).setOrigin(0.5).setInteractive();
 
-        // 游戏提示文本
         this.tipText = this.add.text(this.cameras.main.centerX, 400, 'Use Arrow Keys or A/D to move and Space to shoot', {
             font: '20px Arial',
             fill: '#ffffff'
         }).setOrigin(0.5);
 
-        // 按钮事件
         this.startGameButton.on('pointerdown', () => {
             this.scene.start('PlayScene');
         });
@@ -50,7 +45,6 @@ class Title extends Phaser.Scene {
             this.scene.start('CreditsScene');
         });
 
-        // 鼠标悬停效果
         this.startGameButton.on('pointerover', () => {
             this.startGameButton.setStyle({ fill: '#ff0' });
         });

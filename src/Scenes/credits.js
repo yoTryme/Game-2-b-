@@ -4,7 +4,6 @@ class Credits extends Phaser.Scene {
     }
 
     create() {
-        // 标题文本
         this.creditsTitle = this.add.text(this.cameras.main.centerX, 80, 'Credits', {
             font: '60px Arial',
             fill: '#ffffff',
@@ -18,7 +17,6 @@ class Credits extends Phaser.Scene {
             }
         }).setOrigin(0.5);
 
-        // 游戏设计信息
         this.designByText = this.add.text(this.cameras.main.centerX, 180, 'Game Design by', {
             font: '30px Arial',
             fill: '#ffffff'
@@ -34,7 +32,6 @@ class Credits extends Phaser.Scene {
             fill: '#ffffff'
         }).setOrigin(0.5);
 
-        // 返回按钮
         this.returnButton = this.add.text(this.cameras.main.centerX, 500, 'Click Here to Return to Title', {
             font: '25px Arial',
             fill: '#ffffff',
@@ -42,12 +39,10 @@ class Credits extends Phaser.Scene {
             padding: { x: 10, y: 5 }
         }).setOrigin(0.5).setInteractive();
 
-        // 按钮事件
         this.returnButton.on('pointerdown', () => {
             this.scene.start('TitleScene');
         });
 
-        // 鼠标悬停效果
         this.returnButton.on('pointerover', () => {
             this.returnButton.setStyle({ fill: '#ff0' });
         });

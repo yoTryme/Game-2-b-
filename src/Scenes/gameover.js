@@ -8,7 +8,7 @@ class GG extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBackgroundColor("#000000"); // 确保背景是黑色
+        this.cameras.main.setBackgroundColor("#000000");
         this.ggText = this.add.text(this.cameras.main.centerX, 150, "Game Over", {
             font: "60px Arial",
             fill: "#ffffff",
@@ -46,7 +46,6 @@ class GG extends Phaser.Scene {
             this.scene.start("TitleScene");
         });
 
-        // 鼠标悬停效果
         this.returnButton.on("pointerover", () => {
             this.returnButton.setStyle({ fill: "#ff0" });
         });

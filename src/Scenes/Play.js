@@ -15,13 +15,13 @@ class StarGenesis extends Phaser.Scene {
         this.scoreText = null;
         this.livesText = null;
 
-        // 计时器变量
+        // Timer
         this.enemyTimer = 0;
-        this.enemyInterval = 100; // 增加敌人之间的生成间隔（数值越大，间隔越大）
+        this.enemyInterval = 100; //Increase the spawn interval between enemies. The larger the value, the greater the interval.
     }
 
     preload() {
-        // 预加载资源
+        // preload assets
         this.load.setPath("./assets/");
         this.load.image("background", "Backgournd.png");
         this.load.image("ship", "playerShip1_orange.png");
@@ -34,10 +34,10 @@ class StarGenesis extends Phaser.Scene {
     }
 
     create() {
-        // 设置背景
+        // set background
         this.background = this.add.tileSprite(0, 0, 800, 600, "background").setOrigin(0, 0);
 
-        // 设置动画
+        // set animation
         this.anims.create({
             key: "explosion",
             frames: [{ key: "Explosion" }],
@@ -46,27 +46,27 @@ class StarGenesis extends Phaser.Scene {
             hideOnComplete: true
         });
 
-        // 初始化玩家移动控制
+        // Player movement controls
         this.leftKey = this.input.keyboard.addKey("A");
         this.rightKey = this.input.keyboard.addKey("D");
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // 初始化玩家
+        // Create player
         this.my.sprite.player = this.add.sprite(this.cameras.main.centerX, 500, "ship").setScale(1.5);
 
-        // 初始化分数和生命文本
+        // Show score and lives
         this.scoreText = this.add.text(16, 16, "Score: " + this.score, { fontSize: "32px", fill: "#FFFFFF" });
         this.livesText = this.add.text(16, 48, "Lives: " + this.lives, { fontSize: "32px", fill: "#FFFFFF" });
 
-        // 初始化游戏
+        // reset game
         this.init_game();
     }
 
     update(time, delta) {
-        // 背景滚动逻辑
+        // Background scrolling logic
         this.background.tilePositionY -= 2;
 
-        // 玩家移动逻辑
+        // Player movement logic
         if (this.leftKey.isDown) {
             this.my.sprite.player.x = Math.max(0, this.my.sprite.player.x - this.playerSpeed);
         }
@@ -74,43 +74,43 @@ class StarGenesis extends Phaser.Scene {
             this.my.sprite.player.x = Math.min(800, this.my.sprite.player.x + this.playerSpeed);
         }
 
-        // 发射子弹
+        // fire bullets
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && !this.isShooting) {
             this.my.sprite.bullets.push(this.add.sprite(this.my.sprite.player.x, this.my.sprite.player.y - 20, "bullet"));
             this.isShooting = true;
         }
 
-        // 移动子弹
+        // move bullet
         for (let bullet of this.my.sprite.bullets) {
             bullet.y -= this.bulletSpeed;
         }
 
-        // 清除屏幕外的子弹
+        // Clear off-screen bullets
         this.my.sprite.bullets = this.my.sprite.bullets.filter(bullet => bullet.y > -bullet.height);
 
         if (this.my.sprite.bullets.length === 0) {
             this.isShooting = false;
         }
 
-        // 敌人生成计时器逻辑
+        // Enemy spawn timer logic
         this.enemyTimer += delta;
         if (this.enemyTimer >= this.enemyInterval) {
             this.enemyTimer = 0;
-            if (Phaser.Math.Between(0, 100) < 30) { // 调整生成概率（0-100 之间的值越小，生成的敌人越少）
+            if (Phaser.Math.Between(0, 100) < 30) { // Adjust spawn probability to prevent too many
                 const enemyType = Phaser.Math.Between(1, 2) === 1 ? "enemy1" : "enemy2";
                 this.my.sprite.enemies.push(this.add.sprite(Phaser.Math.Between(50, 750), 0, enemyType).setScale(1.5));
             }
         }
 
-        // 移动敌人
+        // Enemies Move 
         for (let enemy of this.my.sprite.enemies) {
             enemy.y += this.enemySpeed;
         }
 
-        // 清除屏幕外的敌人
+        // Clear off-screen enemies
         this.my.sprite.enemies = this.my.sprite.enemies.filter(enemy => enemy.y < 700); // 700 可以确保敌人离开屏幕
 
-        // 检查子弹和敌人碰撞
+        // Check bullet and enemy collision
         for (let bullet of this.my.sprite.bullets) {
             for (let enemy of this.my.sprite.enemies) {
                 if (this.collides(bullet, enemy)) {
@@ -123,7 +123,7 @@ class StarGenesis extends Phaser.Scene {
             }
         }
 
-        // 检查玩家和敌人碰撞
+        //Check player and enemy collisions
         for (let enemy of this.my.sprite.enemies) {
             if (this.collides(this.my.sprite.player, enemy)) {
                 enemy.y = 700;
@@ -133,7 +133,7 @@ class StarGenesis extends Phaser.Scene {
             }
         }
 
-        // 更新分数和生命显示
+        // Updated score and lives display
         this.scoreText.setText("Score: " + this.score);
         this.livesText.setText("Lives: " + this.lives);
     }

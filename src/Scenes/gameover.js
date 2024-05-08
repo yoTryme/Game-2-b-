@@ -11,6 +11,7 @@ class GG extends Phaser.Scene {
         this.returnButton.setInteractive();
         this.returnButton.on('pointerdown', () => {
             this.scene.start('TitleScene');
+            this.scene.get('PlayScene').resetGame();
         });
     }
 }

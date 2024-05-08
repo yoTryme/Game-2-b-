@@ -16,7 +16,7 @@ class Play extends Phaser.Scene {
         this.load.image('enemy1', 'assets/enemy1.png');
         this.load.image('enemy2', 'assets/enemy2.png');
         this.load.image('Explosion', 'assets/laserYellow_burst.png');
-        this.load.image('enemybullet', 'assets/enemylaser.png');
+//        this.load.image('enemybullet', 'assets/enemylaser.png');
         this.load.audio('explosionSFX', 'assets/explosionCrunch_000.ogg');
         this.load.audio('laser', 'assets/impactMetal_000.ogg');
     }
@@ -136,6 +136,7 @@ class Play extends Phaser.Scene {
             this.explosionSFX.play();
             my.sprite.enemy2.reset();
         }
+        
 
         // 子弹与敌人碰撞逻辑
         if (Phaser.Geom.Intersects.RectangleToRectangle(my.sprite.bullet.getBounds(), my.sprite.enemy1.getBounds())) {
@@ -173,6 +174,11 @@ class Play extends Phaser.Scene {
             this.scene.start('Over', { score: this.score });
         }
     }
+
+    resetGame() {
+        this.lives = 3; // 重置生命值
+    }
+    
 
     addScore(points) {
         this.score += points;

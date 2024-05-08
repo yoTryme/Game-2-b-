@@ -6,8 +6,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.speed = 3;
         // Key Handling
         this.moveLeft = keyLeft;
-        this.moveRight = keyRight;
-        this.setScale(0.5); 
+        this.moveRight = keyRight; 
     }
 
     update() {

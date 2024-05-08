@@ -2,7 +2,7 @@ class EnemyBullet extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture = 'enemybullet', frame) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
-        this.speed = 2; // 调整子弹速度
+        this.speed = 2; // Adjust bullet speed
         this.visible = false;
     }
 

@@ -9,14 +9,14 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        // 加载资源
+        //Load assets
         this.load.image('background', 'assets/Backgournd.png');
         this.load.image('ship', 'assets/playerShip1_orange.png');
         this.load.image('bullet', 'assets/Playerlaser.png');
         this.load.image('enemy1', 'assets/enemy1.png');
         this.load.image('enemy2', 'assets/enemy2.png');
         this.load.image('Explosion', 'assets/laserYellow_burst.png');
-//        this.load.image('enemybullet', 'assets/enemylaser.png');
+    //  this.load.image('enemybullet', 'assets/enemylaser.png');
         this.load.audio('explosionSFX', 'assets/explosionCrunch_000.ogg');
         this.load.audio('laser', 'assets/impactMetal_000.ogg');
     }
@@ -24,25 +24,25 @@ class Play extends Phaser.Scene {
     create() {
         let my = this.my;
 
-        // 背景滚动逻辑
+        //Background scrolling logic
         this.background = this.add.tileSprite(0, 0, 800, 600, 'background').setOrigin(0, 0);
 
 
-        // 玩家移动控制
+        // Player move
         this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.DKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.SPACEKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // 创建主要精灵及其属性
+        // Create the main sprite and its attributes
         my.sprite.player = new Player(this, this.cameras.main.centerX, 500, 'ship', 0, this.AKey, this.DKey).setScale(2.0);
         my.sprite.bullet = new Bullet(this, my.sprite.player.x, my.sprite.player.y, 'bullet').setOrigin(0.5, 0.5);
         my.sprite.bullet.visible = false;
 
-        // 创建敌人
+        // Create enemies
         my.sprite.enemy1 = new Enemy_Rogue(this, Phaser.Math.Between(0, 700), 0, 'enemy1', 1).setScale(2.0).setFlipY(true);
         my.sprite.enemy2 = new Enemy_Rogue(this, Phaser.Math.Between(0, 700), 0, 'enemy2', 1.5).setScale(2.0).setFlipY(true);
 
-        // 创建视觉效果
+        // Create visual effects
         this.anims.create({
             key: 'explosion',
             frames: [{ key: 'Explosion' }],
@@ -50,14 +50,14 @@ class Play extends Phaser.Scene {
             repeat: 0
         });
 
-        // 创建音效
+        // Create sound effects
         this.explosionSFX = this.sound.add('explosionSFX');
 
-        // HP 和得分跟踪
+        // HP and score tracking
         this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFFFFF' });
         this.livesText = this.add.text(16, 48, 'Lives: 3', { fontSize: '32px', fill: '#FFFFFF' });
 
-        // 玩家与敌人子弹碰撞逻辑
+        // Player and enemy bullet collision logic
         this.physics.add.overlap(my.sprite.player, this.enemyBullets, (player, bullet) => {
             bullet.setVisible(false);
             bullet.setActive(false);
@@ -74,21 +74,21 @@ class Play extends Phaser.Scene {
     update(time) {
         let my = this.my;
 
-        // 背景滚动逻辑
+        // Background scrolling logic
         this.background.tilePositionY -= 2;
 
-        // 玩家移动逻辑
+        // player move
         my.sprite.player.update();
 
-        // 更新分数和生命显示
+        // update score and lives
         this.scoreText.setText('Score: ' + this.score);
         this.livesText.setText('Lives: ' + this.lives);
 
-        // 更新玩家和敌人的状态
+        // update enemies
         my.sprite.enemy1.update(time);
         my.sprite.enemy2.update(time);
 
-        // 子弹位置更新逻辑
+        // Bullet position update logic
         if (this.isShooting === true) {
             my.sprite.bullet.update();
         } else {
@@ -100,13 +100,13 @@ class Play extends Phaser.Scene {
             this.isShooting = false;
         }
 
-        // 子弹发射逻辑
+        // Bullet firing logic
         if (Phaser.Input.Keyboard.JustDown(this.SPACEKey) && this.isShooting === false) {
             my.sprite.bullet.setVisible(true);
             this.isShooting = true;
         }
 
-        // 玩家与敌人碰撞逻辑
+        // Player and enemy collision logic
         if (Phaser.Geom.Intersects.RectangleToRectangle(my.sprite.player.getBounds(), my.sprite.enemy1.getBounds())) {
             this.loseLife();
             let boom = this.add.sprite(my.sprite.player.x, my.sprite.player.y, 'Explosion').setOrigin(0.5, 0.5);
@@ -130,7 +130,7 @@ class Play extends Phaser.Scene {
         }
         
 
-        // 子弹与敌人碰撞逻辑
+        // Bullet and enemy collision logic
         if (Phaser.Geom.Intersects.RectangleToRectangle(my.sprite.bullet.getBounds(), my.sprite.enemy1.getBounds())) {
             this.addScore(100);
             let boom = this.add.sprite(my.sprite.enemy1.x, my.sprite.enemy1.y, 'Explosion').setOrigin(0.5, 0.5);
@@ -168,7 +168,8 @@ class Play extends Phaser.Scene {
     }
 
     resetGame() {
-        this.lives = 3; // 重置生命值
+        this.lives = 3; // reset lives
+        this.score = 0; // reset score
     }
     
 

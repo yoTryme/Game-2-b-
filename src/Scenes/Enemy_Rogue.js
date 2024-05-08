@@ -4,13 +4,10 @@ class Enemy_Rogue extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         this.scene = scene;
         this.speed = speed || 1;
-
-        this.setScale(0.5); // 调整敌人尺寸
-        this.setFlipY(true); // 确保方向正确
     }
 
     update() {
-        // 敌人移动逻辑
+        // Enemy movement logic
         this.y += this.speed * 1.5;
         if (this.y > this.scene.game.config.height) {
             this.reset();

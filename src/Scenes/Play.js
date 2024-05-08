@@ -27,12 +27,6 @@ class Play extends Phaser.Scene {
         // 背景滚动逻辑
         this.background = this.add.tileSprite(0, 0, 800, 600, 'background').setOrigin(0, 0);
 
-        // 创建敌人子弹组
-        this.enemyBullets = this.physics.add.group({
-            classType: EnemyBullet,
-            maxSize: 10,
-            runChildUpdate: true
-        });
 
         // 玩家移动控制
         this.AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -47,8 +41,6 @@ class Play extends Phaser.Scene {
         // 创建敌人
         my.sprite.enemy1 = new Enemy_Rogue(this, Phaser.Math.Between(0, 700), 0, 'enemy1', 1).setScale(2.0).setFlipY(true);
         my.sprite.enemy2 = new Enemy_Rogue(this, Phaser.Math.Between(0, 700), 0, 'enemy2', 1.5).setScale(2.0).setFlipY(true);
-        my.sprite.enemy1.bullets = this.enemyBullets;
-        my.sprite.enemy2.bullets = this.enemyBullets;
 
         // 创建视觉效果
         this.anims.create({

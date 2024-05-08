@@ -4,7 +4,7 @@ window.onload = function () {
         type: Phaser.AUTO,
         width: 800,
         height: 600,
-        scene: [Title, StarGenesis, Credits, GG], // 引用新的 `StarGenesis` 场景
+        scene: [Title, StarGenesis, Credits, GG],
         parent: "phaser-game"
     };
 
